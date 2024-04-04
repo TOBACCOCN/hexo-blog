@@ -1,0 +1,53 @@
+<!doctype HTML>
+<html>
+<head>
+	<meta http-equiv="context-type" content="text/html;charset=utf-8;">
+	<title>canvas-mock-the-matrix</title>
+	<style type="text/css">
+		*{margin:0;padding:0;}
+		canvas {
+			display: block;
+			width: 100vw;
+			height: 100vh;
+			background: #000;
+		}
+
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<script type="text/javascript">
+		const cvs = document.getElementById("canvas");
+		cvs.width = window.innerWidth * devicePixelRatio;
+		cvs.height = window.innerHeight * devicePixelRatio;
+		const ctx = cvs.getContext("2d");
+		
+		const fontSize = Math.floor(24 * devicePixelRatio);
+		ctx.font = `${fontSize}px "Roboto Mono"`;
+		ctx.textBaseline = 'top';
+		const columnCount = Math.floor(cvs.width / fontSize);
+		const yIndex = new Array(columnCount).fill(0);
+		const text = '0123456789abcdefghijklmnopqrstuvwxyz';
+		
+		function draw() {
+			ctx.fillStyle = 'rgba(0,0,0,0.1)';
+			ctx.fillRect(0, 0, cvs.width, cvs.height);
+			
+			ctx.fillStyle = '#6Be445';
+			for (let i = 0; i < columnCount; ++i) {
+				const x = i * fontSize;
+				const y = yIndex[i] * fontSize;
+				ctx.fillText(text[Math.floor(Math.random() * text.length)], x, y);
+				
+				if (y > cvs.height && Math.random() > 0.98) {
+					yIndex[i] = 0;
+				} else {
+					yIndex[i]++;
+				}
+			}
+		}
+		
+		setInterval(draw,60);
+	</script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="context-type" charset="utf-8;">
+	<title>duanwu</title>
+	<link rel="stylesheet" href="./animation.css">
+	<style type="text/css">
+		html, body {
+			margin: 0;
+			width: 100vw;
+			height: 100vh;
+		}
+		div {
+			width: 100vw;
+			height: 100vh;
+		}
+		.text {
+			position: absolute;
+			width: 100vw;
+			text-align: center;
+			font-family: "lato";
+			font-weight: 300;
+			font-size: 50px;
+			letter-spacing: 10px;
+			background: linear-gradient(white, #38495a);
+			background-clip: text;
+			-webkit-background-clip: text;
+			color: gray;
+		}
+		#container2 {
+			height: 10vh;
+			margin-top: 90vh;
+		}
+		#container4 {
+			height: 90vh;
+			margin-top: 10vh;
+		}
+		#container6 {
+			height: 90vh;
+			margin-top: 10vh;
+		}
+		#container8 {
+			height: 90vh;
+			margin-top: 10vh;
+		}
+
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		var timeoutId;
+		var time = 5000;
+		window.onload = function(){
+			console.log('onload');
+			addDiv();
+			setInterval("toggleSound()", 100);
+			timeoutId = setTimeout("changeZindex()", time);
+		}
+
+		function toggleSound() {
+			let music = document.getElementById("audio"); 
+			if (music.paused) {
+				music.paused = false;
+				music.play();
+			}    
+		}
+		
+		// 背景图地址数组
+		let urls = [
+			'https://s1.ax1x.com/2023/06/23/pCYBd61.jpg',
+			'https://s1.ax1x.com/2023/06/23/pCY0lIe.jpg',
+			'https://s1.ax1x.com/2023/06/23/pCYBETS.jpg',
+			'https://s1.ax1x.com/2023/06/23/pCYBtfJ.jpg',
+			'https://s1.ax1x.com/2023/06/23/pCYBQO0.jpg',
+			'https://s1.ax1x.com/2023/06/23/pCYB2pd.jpg',
+			'https://s1.ax1x.com/2023/06/23/pCYB1mV.jpg',
+		];
+		let imgsLen = urls.length;
+		let poems = [
+			'\u4e00\u5c81\u4e00\u5b89\u5eb7',
+			'\u4e00\u5e74\u4e00\u7aef\u5348',
+			'\u7247\u7247\u7cbd\u53f6\u957f',
+			'\u60a0\u60a0\u827e\u8349\u9999',
+		];
+		let poemsLen = poems.length;
+		let topDivIndex = imgsLen + poemsLen;
+		
+		// 保持数量与 urls 的一致
+		let usableAnimationClasses = [
+			'scale-out-center',
+			'rotate-out-center',
+			'flip-out-hor-top',
+			'slide-out-bck-center',
+			'slide-out-fwd-center',
+			'slit-out-vertical',
+			'bounce-out-top',
+		];
+		let usedAnimationClasses = [];
+		
+		function byId(index) {
+			return document.getElementById("container" + index);
+		}
+		
+		function animate(index) {
+			if (usableAnimationClasses.length === 0) {
+				usableAnimationClasses = [...usedAnimationClasses];
+				usedAnimationClasses = [];
+			}
+			let className = usableAnimationClasses.splice(Math.floor(Math.random() * usableAnimationClasses.length), 1);
+			usedAnimationClasses.push(className);
+			byId(index).classList.add(className);
+		}
+		
+		function clearClass(classes) {
+			for (let c of usedAnimationClasses) {
+				if (classes.contains(c)) {
+					classes.remove(c);
+				}
+			}
+		}
+		
+		function restart() {
+			for (let i = imgsLen; i > 0; --i) {
+				byId(actualIndex(i)).style.zIndex = "" + actualIndex(i);
+			}
+			for (let j = poemsLen - 1; j >= 0; --j) {
+				byId((j + 1) * 2).style.zIndex = "" + (j + 1) * 2;
+			}
+			timeoutId = setTimeout("changeZindex()", time);
+		}
+		
+		function move2innermost(index) {
+			console.log("move2innermost");
+
+			printZindexClasses();
+			byId(index).style.zIndex -= (imgsLen + poemsLen);
+			clearClass(byId(index).classList);
+			
+			if (topDivIndex <= poemsLen * 2 + 1) {
+				topDivIndex -= 2;
+			} else {
+				topDivIndex--;
+			}
+			if (topDivIndex === -1) {
+				topDivIndex = imgsLen + poemsLen;
+			}
+			clearTimeout(timeoutId);
+			if (index !== 1) {
+				timeoutId = setTimeout("changeZindex()", time);
+			} else {
+				window.location.reload();
+				<!-- restart(); -->
+			}
+		}
+		
+		function changeZindex() {
+			console.log("changeZindex, time: " + new Date().getTime());
+			
+			if (topDivIndex <= poemsLen * 2 - 1) {
+				byId(topDivIndex + 1).style.zIndex -= (imgsLen + poemsLen);
+			}
+			// 添加动画效果，然后放在最里层
+			animate(topDivIndex);
+			byId(topDivIndex).addEventListener("animationend", () => move2innermost(topDivIndex));
+		}
+		
+		// 添加 div
+		function addDiv() {
+			console.log("addDiv, time: " + new Date().getTime());
+			// 图片
+			for (let i = imgsLen; i > 0; --i) {
+				var div = document.createElement("div");
+				div.style.position = "absolute";
+				div.id = "container" + actualIndex(i);
+				div.style.zIndex = "" + actualIndex(i);
+				div.style.background = "no-repeat center/100vw 100vh url('" + urls[(i-1)%imgsLen] + "')";
+				document.getElementsByTagName('body')[0].appendChild(div); 
+
+			}
+			// 文案内容
+			for (let i = poemsLen - 1; i >= 0; --i) {
+				var div = document.createElement("div");
+				div.id = "container" + (i + 1) * 2;
+				div.classList.add("text");
+				div.style.zIndex = "" + (i + 1) * 2;
+				document.getElementsByTagName('body')[0].appendChild(div); 
+				if (i%2 == 0) {
+					div.append(poems[i]);
+					var img = document.createElement('img');
+					img.src = "./yinhao_right.png";
+					div.appendChild(img);
+				} else {
+					var img = document.createElement('img');
+					img.src = "./yinhao_left.png";
+					div.appendChild(img);
+					div.append(poems[i]);
+				}
+			}
+			printZindexClasses();
+		}
+		
+		function actualIndex(imgIndex) {
+			return (imgIndex <= poemsLen) ? (imgIndex * 2 - 1) : (imgIndex + poemsLen);
+		}
+		
+		function printZindexClasses() {
+      for (let i = imgsLen + poemsLen; i > 0; --i) {
+        let o = byId(i);
+        let classes = o.classList;
+        let zIndex = o.style.zIndex;
+        console.log("id: contaier" + i + ", zIndex: " + zIndex + ", classes: " + classes);
+      }
+    }
+	</script>
+	<audio controls="controls" hidden autoplay="autoplay" id="audio">
+		<source src="https://aod.cos.tx.xmcdn.com/storages/7501-audiofreehighqps/61/01/GKwRIDoFZPh1ACrkYAD2tXn-.m4a" type="audio/mp3">
+		Your browser does not support the audio element.
+	</audio>
+</body>
+</html>

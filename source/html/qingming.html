@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="context-type" charset="utf-8;">
+	<title>qingming</title>
+	<link rel="stylesheet" href="./animation.css">
+	<style type="text/css">
+		html, body {
+			margin: 0;
+			width: 100vw;
+			height: 100vh;
+		}
+		div {
+			width: 100vw;
+			height: 100vh;
+		}
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		<!-- window.onload = function(){ -->
+			<!-- console.log('onload'); -->
+			<!-- addDiv(); -->
+			<!-- setInterval("toggleSound()", 100); -->
+			<!-- setInterval("changeZindex()", 5000); -->
+		<!-- } -->
+
+		<!-- function toggleSound() { -->
+			<!-- let music = document.getElementById("audio");  -->
+			<!-- if (music.paused) { -->
+				<!-- music.paused = false; -->
+				<!-- music.play(); -->
+			<!-- }     -->
+		<!-- } -->
+		
+		<!-- // 背景图地址数组 -->
+		<!-- let urls = [ -->
+			<!-- 'https://s21.ax1x.com/2024/04/03/pFbV6s0.jpg', -->
+			<!-- 'https://s21.ax1x.com/2024/04/03/pFbVhi4.jpg', -->
+			<!-- 'https://s21.ax1x.com/2024/04/03/pFbV5W9.jpg', -->
+			<!-- 'https://s21.ax1x.com/2024/04/03/pFbVIzR.jpg', -->
+			<!-- 'https://s21.ax1x.com/2024/04/03/pFbV7sx.jpg', -->
+			<!-- 'https://s21.ax1x.com/2024/04/03/pFbZuyq.jpg', -->
+		<!-- ]; -->
+		<!-- let len = urls.length; -->
+		<!-- let topDivIndex = len - 1; -->
+		
+		<!-- // 保持数量与 urls 的一致 -->
+		<!-- let usableAnimationClasses = ['scale-out-center', 'rotate-out-center', 'flip-out-hor-top', 'slide-out-fwd-center', 'slit-out-vertical', 'bounce-out-top']; -->
+		<!-- let usableAnimationClasses = ['scale-out-center']; -->
+		<!-- let usableAnimationClasses = ['rotate-out-center']; -->
+		<!-- let usableAnimationClasses = ['flip-out-hor-top']; -->
+		<!-- let usableAnimationClasses = ['slide-out-bck-center']; -->
+		<!-- let usableAnimationClasses = ['slide-out-fwd-center']; -->
+		<!-- let usableAnimationClasses = ['slit-out-vertical']; -->
+		<!-- let usableAnimationClasses = ['bounce-out-top']; -->
+		<!-- let usedAnimationClasses = []; -->
+		
+		<!-- function changeZindex() { -->
+      <!-- console.log("changeZindex"); -->
+			<!-- // 停止所有 div 的动画 -->
+			<!-- for (var i = 0; i < len; ++i) { -->
+				<!-- var classes = document.getElementById("container" + i).classList; -->
+				<!-- if (classes.length != 0) { -->
+					<!-- for (let c of usedAnimationClasses) { -->
+						<!-- if (classes.contains(c)) { -->
+							<!-- classes.remove(c); -->
+						<!-- } -->
+					<!-- } -->
+				<!-- } -->
+			<!-- } -->
+			
+			<!-- // 将当前最外层的 div 放到最里层 -->
+			<!-- document.getElementById("container" + topDivIndex).style.zIndex -= (len); -->
+			
+			<!-- // 将刚上浮到最外层的 div 添加动画效果 -->
+			<!-- let nextDivIndex = topDivIndex - 1; -->
+			<!-- if (nextDivIndex === -1) { -->
+				<!-- nextDivIndex = len - 1; -->
+			<!-- } -->
+			<!-- let nextDiv = document.getElementById("container" + nextDivIndex); -->
+			<!-- if (usableAnimationClasses.length === 0) { -->
+				<!-- usableAnimationClasses = [...usedAnimationClasses]; -->
+				<!-- usedAnimationClasses = []; -->
+			<!-- } -->
+			<!-- let className = usableAnimationClasses.splice(Math.floor(Math.random() * usableAnimationClasses.length), 1); -->
+			<!-- usedAnimationClasses.push(className); -->
+			<!-- nextDiv.classList.add(className); -->
+      <!-- console.log("topDivIndex: " + topDivIndex + ", nextDivIndex: " + nextDivIndex); -->
+      <!-- printZindexClasses(); -->
+			
+			<!-- topDivIndex--; -->
+			<!-- if (topDivIndex === -1) { -->
+				<!-- topDivIndex = len - 1; -->
+			<!-- } -->
+		<!-- } -->
+		
+		<!-- // 添加 div -->
+		<!-- function addDiv() { -->
+      <!-- console.log("addDiv"); -->
+			<!-- for (let i = 0; i < len; ++i) { -->
+				<!-- var div = document.createElement("div"); -->
+				<!-- div.style.position = "absolute"; -->
+				<!-- div.id = "container" + i; -->
+				<!-- div.style.zIndex = "" + i; -->
+				<!-- div.style.background = "no-repeat center/100vw 100vh url('" + urls[i%len] + "')"; -->
+				<!-- document.getElementsByTagName('body')[0].appendChild(div);  -->
+
+			<!-- } -->
+			<!-- let className = usableAnimationClasses.splice(Math.floor(Math.random() * usableAnimationClasses.length), 1); -->
+			<!-- usedAnimationClasses.push(className); -->
+			<!-- div.classList.add(className); -->
+      <!-- printZindexClasses(); -->
+		<!-- } -->
+
+    <!-- function printZindexClasses() { -->
+      <!-- for (let i = len - 1; i >= 0; --i) { -->
+        <!-- let id = "container" + i; -->
+        <!-- let o = document.getElementById(id); -->
+        <!-- let classes = o.classList; -->
+        <!-- let zIndex = o.style.zIndex; -->
+        <!-- console.log("id: " + id + ", zIndex: " + zIndex + ", classes: " + classes); -->
+      <!-- } -->
+    <!-- } -->
+		
+		
+		
+		
+		var timeoutId;
+		var time = 5000;
+		window.onload = function(){
+			console.log('onload');
+			addDiv();
+			setInterval("toggleSound()", 100);
+			timeoutId = setTimeout("changeZindex()", time);
+		}
+
+		function toggleSound() {
+			let music = document.getElementById("audio"); 
+			if (music.paused) {
+				music.paused = false;
+				music.play();
+			}    
+		}
+		
+		// 背景图地址数组
+		let urls = [
+			'https://s21.ax1x.com/2024/04/03/pFbV6s0.jpg',
+			'https://s21.ax1x.com/2024/04/03/pFbVhi4.jpg',
+			'https://s21.ax1x.com/2024/04/03/pFbV5W9.jpg',
+			'https://s21.ax1x.com/2024/04/03/pFbVIzR.jpg',
+			'https://s21.ax1x.com/2024/04/03/pFbV7sx.jpg',
+			'https://s21.ax1x.com/2024/04/03/pFbZuyq.jpg',
+		];
+		let imgsLen = urls.length;
+		let topDivIndex = imgsLen;
+		
+		// 保持数量与 urls 的一致
+		let usableAnimationClasses = [
+			'scale-out-center',
+			'rotate-out-center',
+			'flip-out-hor-top',
+			'slide-out-fwd-center',
+			'slit-out-vertical',
+			'bounce-out-top',
+		];
+		let usedAnimationClasses = [];
+		
+		function byId(index) {
+			return document.getElementById("container" + index);
+		}
+		
+		function animate(index) {
+			if (usableAnimationClasses.length === 0) {
+				usableAnimationClasses = [...usedAnimationClasses];
+				usedAnimationClasses = [];
+			}
+			let className = usableAnimationClasses.splice(Math.floor(Math.random() * usableAnimationClasses.length), 1);
+			usedAnimationClasses.push(className);
+			byId(index).classList.add(className);
+		}
+		
+		function clearClass(classes) {
+			for (let c of usedAnimationClasses) {
+				if (classes.contains(c)) {
+					classes.remove(c);
+				}
+			}
+		}
+		
+		function restart() {
+			for (let i = imgsLen; i > 0; --i) {
+				byId(i).style.zIndex = "" + i;
+			}
+			timeoutId = setTimeout("changeZindex()", time);
+		}
+		
+		function move2innermost(index) {
+			console.log("move2innermost");
+
+			printZindexClasses();
+			byId(index).style.zIndex -= imgsLen;
+			clearClass(byId(index).classList);
+		
+			topDivIndex--;
+
+			if (topDivIndex === 0) {
+				topDivIndex = imgsLen;
+			}
+			clearTimeout(timeoutId);
+			if (index !== 1) {
+				timeoutId = setTimeout("changeZindex()", time);
+			} else {
+				<!-- window.location.reload(); -->
+				restart();
+			}
+		}
+		
+		function changeZindex() {
+			console.log("changeZindex, time: " + new Date().getTime());
+			
+			// 添加动画效果，然后放在最里层
+			animate(topDivIndex);
+			byId(topDivIndex).addEventListener("animationend", () => move2innermost(topDivIndex));
+		}
+		
+		// 添加 div
+		function addDiv() {
+			console.log("addDiv, time: " + new Date().getTime());
+			// 图片
+			for (let i = imgsLen; i > 0; --i) {
+				var div = document.createElement("div");
+				div.style.position = "absolute";
+				div.id = "container" + i;
+				div.style.zIndex = "" + i;
+				div.style.background = "no-repeat center/100vw 100vh url('" + urls[(i-1)%imgsLen] + "')";
+				document.getElementsByTagName('body')[0].appendChild(div); 
+
+			}
+			printZindexClasses();
+		}
+		
+		function printZindexClasses() {
+      for (let i = imgsLen; i > 0; --i) {
+        let o = byId(i);
+        let classes = o.classList;
+        let zIndex = o.style.zIndex;
+        console.log("id: contaier" + i + ", zIndex: " + zIndex + ", classes: " + classes);
+      }
+    }
+	</script>
+	<audio controls="controls" hidden autoplay="autoplay" id="audio">
+		<source src="https://aod.cos.tx.xmcdn.com/storages/7501-audiofreehighqps/61/01/GKwRIDoFZPh1ACrkYAD2tXn-.m4a" type="audio/mp3">
+		Your browser does not support the audio element.
+	</audio>
+</body>
+</html>
